@@ -37,28 +37,31 @@ jobs:
       - name: Wait for WordPress readiness
         run: |
           for i in {1..30}; do
-          status=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080 || echo "000")
-          if [ "$status" = "200" ] || [ "$status" = "302" ]; then
-          echo "WordPress is ready (HTTP $status)"
-          exit 0
-          fi
-          echo "Attempt $i: HTTP $status, waiting..."
-          sleep 5
+            status=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080 || echo "000")
+            if [ "$status" = "200" ] || [ "$status" = "302" ]; then
+              echo "WordPress is ready (HTTP $status)"
+              exit 0
+            fi
+            echo "Attempt $i: HTTP $status, waiting..."
+            sleep 5
           done
           echo "WordPress failed to start after 30 attempts"
           exit 1
 
+      - name: Prepare scans directory
+        run: |
+          mkdir -p ${{ github.workspace }}/scans
+          chmod 777 ${{ github.workspace }}/scans
+
       - name: Run WPScan
         run: |
           docker run --rm --network container:wp-site \
-            -v ${{ github.workspace }}/scans:/wpscan/output \
             wpscanteam/wpscan \
             --url http://localhost:8080 \
             --enumerate u,vp,vt \
             --api-token ${{ secrets.WPSCAN_API_TOKEN }} \
             --format json \
-            --output /wpscan/output/scan-result.json \
-            --no-banner
+            --no-banner > ${{ github.workspace }}/scans/scan-result.json
 
       - name: Upload scan artifacts
         uses: actions/upload-artifact@v4
