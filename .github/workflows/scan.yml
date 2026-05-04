@@ -71,16 +71,24 @@ jobs:
           mkdir -p ${{ github.workspace }}/scans
           chmod 777 ${{ github.workspace }}/scans
 
-      - name: Run WPScan (host network)
+      - name: Run WPScan
         run: |
+          set +e
           docker run --rm --network host \
             wpscanteam/wpscan \
             --url http://localhost:8080 \
             --enumerate u,vp,vt \
             --api-token ${{ secrets.WPSCAN_API_TOKEN }} \
             --format json \
-            --no-banner > ${{ github.workspace }}/scans/scan-result.json
-          echo "WPScan completed. JSON saved."
+            --no-banner > ${{ github.workspace }}/scans/scan-result.json 2>&1
+          EXIT_CODE=$?
+          echo "WPScan exit code: $EXIT_CODE"
+          if [ $EXIT_CODE -ne 0 ]; then
+            echo "WPScan encountered an error. Output:"
+            cat ${{ github.workspace }}/scans/scan-result.json
+            exit $EXIT_CODE
+          fi
+          set -e
 
       - name: Upload scan artifacts
         uses: actions/upload-artifact@v4
