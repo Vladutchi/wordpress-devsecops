@@ -34,34 +34,53 @@ jobs:
             -p 8080:80 \
             wordpress:5.8
 
-      - name: Wait for WordPress readiness
+      - name: Wait for MySQL to be ready
         run: |
           for i in {1..30}; do
-            status=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080 || echo "000")
-            if [ "$status" = "200" ] || [ "$status" = "302" ]; then
-              echo "WordPress is ready (HTTP $status)"
+            if docker exec wp-db mysqladmin ping -h localhost --silent; then
+              echo "MySQL is ready"
               exit 0
             fi
-            echo "Attempt $i: HTTP $status, waiting..."
+            echo "Waiting for MySQL... ($i)"
             sleep 5
           done
-          echo "WordPress failed to start after 30 attempts"
-          exit 1
+          echo "MySQL failed to start" && exit 1
+
+      - name: Install WordPress using wp-cli
+        run: |
+          # Download wp-cli
+          docker exec wp-site curl -s -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+          docker exec wp-site chmod +x wp-cli.phar
+          # Run installation (allow root because container runs as root by default)
+          docker exec wp-site php wp-cli.phar core install \
+            --url="http://localhost:8080" \
+            --title="Test Site" \
+            --admin_user="admin" \
+            --admin_password="Admin123!" \
+            --admin_email="admin@example.com" \
+            --allow-root
+          echo "WordPress installed successfully"
+
+      - name: Verify WordPress is running
+        run: |
+          docker ps | grep wp-site || (docker logs wp-site && exit 1)
+          curl -s -f http://localhost:8080 | head -20 || (echo "WordPress not reachable" && exit 1)
 
       - name: Prepare scans directory
         run: |
           mkdir -p ${{ github.workspace }}/scans
           chmod 777 ${{ github.workspace }}/scans
 
-      - name: Run WPScan
+      - name: Run WPScan (host network)
         run: |
-          docker run --rm --network container:wp-site \
+          docker run --rm --network host \
             wpscanteam/wpscan \
             --url http://localhost:8080 \
             --enumerate u,vp,vt \
             --api-token ${{ secrets.WPSCAN_API_TOKEN }} \
             --format json \
             --no-banner > ${{ github.workspace }}/scans/scan-result.json
+          echo "WPScan completed. JSON saved."
 
       - name: Upload scan artifacts
         uses: actions/upload-artifact@v4
@@ -75,3 +94,4 @@ jobs:
             echo "Critical vulnerabilities detected! Fix required."
             exit 1
           fi
+          echo "No critical vulnerabilities found. Scan passed."
