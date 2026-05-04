@@ -1,0 +1,29 @@
+FROM wordpress:6.4.2-php8.2-apache
+
+# Switch to non‑root user for security
+RUN useradd -m -u 1000 -s /bin/bash wpuser && \
+    chown -R wpuser:wpuser /var/www/html
+
+# Remove unnecessary packages
+RUN apt-get update && apt-get remove -y \
+    telnet \
+    ftp \
+    netcat \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Hardening: disable xmlrpc, block directory listing, hide version
+RUN { \
+        echo '<Files xmlrpc.php>'; \
+        echo '    Require all denied'; \
+        echo '</Files>'; \
+        echo 'Options -Indexes'; \
+        echo 'ServerSignature Off'; \
+        echo 'ServerTokens Prod'; \
+        echo 'Header unset X-Powered-By'; \
+    } > /etc/apache2/conf-available/security-hardening.conf && \
+    a2enconf security-hardening && \
+    a2enmod headers
+
+USER wpuser
+EXPOSE 80

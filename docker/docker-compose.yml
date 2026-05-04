@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  wordpress:
+    image: wordpress:5.8  # intentionally outdated vulnerable version
+    container_name: wp-site
+    ports:
+      - "8080:80"
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wpuser
+      WORDPRESS_DB_PASSWORD: wppass
+      WORDPRESS_DB_NAME: wordpress
+    depends_on:
+      - db
+    restart: always
+
+  db:
+    image: mysql:5.7
+    container_name: wp-db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wpuser
+      MYSQL_PASSWORD: wppass
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+
+volumes:
+  db_data:

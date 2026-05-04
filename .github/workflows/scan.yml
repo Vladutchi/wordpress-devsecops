@@ -1,0 +1,71 @@
+name: WordPress Security Scan
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  wpscan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create Docker network
+        run: docker network create wp-net
+
+      - name: Start MySQL container
+        run: |
+          docker run -d --name wp-db --network wp-net \
+            -e MYSQL_ROOT_PASSWORD=rootpass \
+            -e MYSQL_DATABASE=wordpress \
+            -e MYSQL_USER=wpuser \
+            -e MYSQL_PASSWORD=wppass \
+            mysql:5.7
+
+      - name: Start WordPress container (vulnerable version)
+        run: |
+          docker run -d --name wp-site --network wp-net \
+            -e WORDPRESS_DB_HOST=wp-db:3306 \
+            -e WORDPRESS_DB_USER=wpuser \
+            -e WORDPRESS_DB_PASSWORD=wppass \
+            -e WORDPRESS_DB_NAME=wordpress \
+            -p 8080:80 \
+            wordpress:5.8
+
+      - name: Wait for WordPress readiness
+        run: |
+          for i in {1..30}; do
+            if curl -s -f http://localhost:8080/wp-includes/version.php | grep -q 'wp_version'; then
+              echo "WordPress is ready"
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "WordPress failed to start" && exit 1
+
+      - name: Run WPScan
+        run: |
+          docker run --rm --network container:wp-site \
+            -v ${{ github.workspace }}/scans:/wpscan/output \
+            wpscanteam/wpscan \
+            --url http://localhost:8080 \
+            --enumerate u,vp,vt \
+            --api-token ${{ secrets.WPSCAN_API_TOKEN }} \
+            --format json \
+            --output /wpscan/output/scan-result.json \
+            --no-banner
+
+      - name: Upload scan artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: wpscan-report
+          path: scans/scan-result.json
+
+      - name: Fail if critical vulnerabilities found
+        run: |
+          if grep -q '"critical"' scans/scan-result.json; then
+            echo "Critical vulnerabilities detected! Fix required."
+            exit 1
+          fi
