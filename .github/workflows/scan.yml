@@ -8,6 +8,8 @@ on:
 jobs:
   wpscan:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write          # required to push scan results back to the repo
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -80,9 +82,7 @@ jobs:
             --no-banner > ${{ github.workspace }}/scans/scan-result.json 2> ${{ github.workspace }}/scans/wpscan-errors.log
           EXIT_CODE=$?
           echo "WPScan exit code: $EXIT_CODE"
-          # Save exit code for later gate check
           echo "$EXIT_CODE" > ${{ github.workspace }}/scans/scan-exit-code.txt
-          # Only fatal errors stop the pipeline immediately
           if [ $EXIT_CODE -ne 0 ] && [ $EXIT_CODE -ne 5 ]; then
             echo "WPScan encountered a fatal error. Exiting."
             exit $EXIT_CODE
@@ -99,6 +99,19 @@ jobs:
             scans/scan-exit-code.txt
             scans/wpscan-errors.log
 
+      - name: Commit scan results to repository
+        if: always()
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add scans/
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Automated WPScan report [exit code $(cat scans/scan-exit-code.txt)]"
+            git push
+          fi
+
       - name: Fail if vulnerabilities found
         run: |
           EXIT_CODE=$(cat scans/scan-exit-code.txt)
@@ -108,17 +121,3 @@ jobs:
             exit 1
           fi
           echo "No vulnerabilities found. Scan passed."
-      - name: Commit scan results to repository
-        if: always() # always run, even if a previous step failed
-        run: |
-          # Copy all files from runner workspace scans/ to the repo scans/ (they're already there)
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          git add scans/
-          # Only commit if there are changes
-          if git diff --cached --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "Automated WPScan report [exit code $(cat scans/scan-exit-code.txt)]"
-            git push
-          fi
