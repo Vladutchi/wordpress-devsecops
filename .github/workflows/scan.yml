@@ -18,33 +18,40 @@ jobs:
       - name: Start MySQL container
         run: |
           docker run -d --name wp-db --network wp-net \
-            -e MYSQL_ROOT_PASSWORD=rootpass \
-            -e MYSQL_DATABASE=wordpress \
-            -e MYSQL_USER=wpuser \
-            -e MYSQL_PASSWORD=wppass \
+            -e MYSQL_ROOT_PASSWORD="${{ secrets.MYSQL_ROOT_PASSWORD }}" \
+            -e MYSQL_DATABASE="${{ secrets.MYSQL_DATABASE }}" \
+            -e MYSQL_USER="${{ secrets.MYSQL_USER }}" \
+            -e MYSQL_PASSWORD="${{ secrets.MYSQL_PASSWORD }}" \
             mysql:5.7
 
-      - name: Start MySQL container
+      - name: Wait for MySQL to be ready
         run: |
-          docker run -d --name wp-db --network wp-net \
-            -e MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }} \
-            -e MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }} \
-            -e MYSQL_USER=${{ secrets.MYSQL_USER }} \
-            -e MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }} \
-            mysql:5.7
+          for i in {1..30}; do
+            if docker exec wp-db mysqladmin ping -h localhost --silent; then
+              echo "MySQL is ready"
+              exit 0
+            fi
+            echo "Waiting for MySQL... ($i)"
+            sleep 5
+          done
+          echo "MySQL failed to start" && exit 1
 
       - name: Start WordPress container (vulnerable version)
         run: |
           docker run -d --name wp-site --network wp-net \
             -e WORDPRESS_DB_HOST=wp-db:3306 \
-            -e WORDPRESS_DB_USER=${{ secrets.MYSQL_USER }} \
-            -e WORDPRESS_DB_PASSWORD=${{ secrets.MYSQL_PASSWORD }} \
-            -e WORDPRESS_DB_NAME=${{ secrets.MYSQL_DATABASE }} \
+            -e WORDPRESS_DB_USER="${{ secrets.MYSQL_USER }}" \
+            -e WORDPRESS_DB_PASSWORD="${{ secrets.MYSQL_PASSWORD }}" \
+            -e WORDPRESS_DB_NAME="${{ secrets.MYSQL_DATABASE }}" \
             -p 8080:80 \
             wordpress:5.8
-      
+
       - name: Install WordPress using wp-cli
         run: |
+          # Download wp-cli inside the container
+          docker exec wp-site curl -s -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+          docker exec wp-site chmod +x wp-cli.phar
+          # Install WordPress (allow root because container runs as root by default)
           docker exec wp-site php wp-cli.phar core install \
             --url="http://localhost:8080" \
             --title="Test Site" \
@@ -70,7 +77,7 @@ jobs:
             wpscanteam/wpscan \
             --url http://localhost:8080 \
             --enumerate u,vp,vt \
-            --api-token ${{ secrets.WPSCAN_API_TOKEN }} \
+            --api-token "${{ secrets.WPSCAN_API_TOKEN }}" \
             --format json \
             --no-banner > ${{ github.workspace }}/scans/scan-result.json 2>&1
           EXIT_CODE=$?
