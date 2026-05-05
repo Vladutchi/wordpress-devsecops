@@ -108,3 +108,17 @@ jobs:
             exit 1
           fi
           echo "No vulnerabilities found. Scan passed."
+      - name: Commit scan results to repository
+        if: always() # always run, even if a previous step failed
+        run: |
+          # Copy all files from runner workspace scans/ to the repo scans/ (they're already there)
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add scans/
+          # Only commit if there are changes
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Automated WPScan report [exit code $(cat scans/scan-exit-code.txt)]"
+            git push
+          fi
