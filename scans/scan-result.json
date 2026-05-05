@@ -1,6 +1,6 @@
 {
-  "start_time": 1777985282,
-  "start_memory": 48766976,
+  "start_time": 1777986051,
+  "start_memory": 48635904,
   "target_url": "http://localhost:8080/",
   "target_ip": "::1",
   "effective_url": "http://localhost:8080/",
@@ -643,16 +643,16 @@
   "vuln_api": {
     "plan": "free",
     "requests_done_during_scan": 2,
-    "requests_remaining": 9
+    "requests_remaining": 7
   },
-  "stop_time": 1777985302,
-  "elapsed": 20,
+  "stop_time": 1777986070,
+  "elapsed": 19,
   "requests_done": 1363,
   "cached_requests": 10,
   "data_sent": 370890,
   "data_sent_humanised": "362.197 KB",
-  "data_received": 8078221,
+  "data_received": 8078223,
   "data_received_humanised": "7.704 MB",
-  "used_memory": 317378560,
-  "used_memory_humanised": "302.676 MB"
+  "used_memory": 315023360,
+  "used_memory_humanised": "300.43 MB"
 }
