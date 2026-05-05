@@ -1,0 +1,46 @@
+Unable to find image 'wpscanteam/wpscan:latest' locally
+latest: Pulling from wpscanteam/wpscan
+f18232174bc9: Pulling fs layer
+54d2333d4b68: Pulling fs layer
+3dd4e551d25d: Pulling fs layer
+80cff0282881: Pulling fs layer
+43af7fe1caec: Pulling fs layer
+08f0dfdc39d3: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+93eb852942fd: Pulling fs layer
+08a47d70f14c: Pulling fs layer
+4f4fb700ef54: Waiting
+93eb852942fd: Waiting
+08a47d70f14c: Waiting
+80cff0282881: Waiting
+43af7fe1caec: Waiting
+08f0dfdc39d3: Waiting
+54d2333d4b68: Verifying Checksum
+54d2333d4b68: Download complete
+f18232174bc9: Verifying Checksum
+f18232174bc9: Download complete
+43af7fe1caec: Verifying Checksum
+43af7fe1caec: Download complete
+80cff0282881: Verifying Checksum
+80cff0282881: Download complete
+f18232174bc9: Pull complete
+4f4fb700ef54: Verifying Checksum
+4f4fb700ef54: Download complete
+54d2333d4b68: Pull complete
+93eb852942fd: Verifying Checksum
+93eb852942fd: Download complete
+08a47d70f14c: Verifying Checksum
+08a47d70f14c: Download complete
+3dd4e551d25d: Verifying Checksum
+3dd4e551d25d: Download complete
+08f0dfdc39d3: Verifying Checksum
+08f0dfdc39d3: Download complete
+3dd4e551d25d: Pull complete
+80cff0282881: Pull complete
+43af7fe1caec: Pull complete
+08f0dfdc39d3: Pull complete
+4f4fb700ef54: Pull complete
+93eb852942fd: Pull complete
+08a47d70f14c: Pull complete
+Digest: sha256:3ccb322a2dc132045e254f485768ae3d81b873df80a2d548f5b15df4fcef08ec
+Status: Downloaded newer image for wpscanteam/wpscan:latest
