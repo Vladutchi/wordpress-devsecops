@@ -48,10 +48,8 @@ jobs:
 
       - name: Install WordPress using wp-cli
         run: |
-          # Download wp-cli inside the container
           docker exec wp-site curl -s -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
           docker exec wp-site chmod +x wp-cli.phar
-          # Install WordPress (allow root because container runs as root by default)
           docker exec wp-site php wp-cli.phar core install \
             --url="http://localhost:8080" \
             --title="Test Site" \
@@ -70,10 +68,9 @@ jobs:
           mkdir -p ${{ github.workspace }}/scans
           chmod 777 ${{ github.workspace }}/scans
 
-      - name: Run WPScan (allow vulnerabilities found - exit code 5)
+      - name: Run WPScan
         run: |
           set +e
-          # JSON output to scan-result.json, stderr to a separate log
           docker run --rm --network host \
             wpscanteam/wpscan \
             --url http://localhost:8080 \
@@ -83,41 +80,31 @@ jobs:
             --no-banner > ${{ github.workspace }}/scans/scan-result.json 2> ${{ github.workspace }}/scans/wpscan-errors.log
           EXIT_CODE=$?
           echo "WPScan exit code: $EXIT_CODE"
-          # Show any warnings from stderr (helps debugging without breaking JSON)
-          if [ -s ${{ github.workspace }}/scans/wpscan-errors.log ]; then
-            echo "WPScan stderr output:"
-            cat ${{ github.workspace }}/scans/wpscan-errors.log
-          fi
+          # Save exit code for later gate check
+          echo "$EXIT_CODE" > ${{ github.workspace }}/scans/scan-exit-code.txt
+          # Only fatal errors stop the pipeline immediately
           if [ $EXIT_CODE -ne 0 ] && [ $EXIT_CODE -ne 5 ]; then
             echo "WPScan encountered a fatal error. Exiting."
             exit $EXIT_CODE
           fi
-          echo "WPScan completed successfully (scan may contain vulnerabilities)"
+          echo "WPScan completed (scan may contain vulnerabilities)"
           set -e
 
       - name: Upload scan artifacts
         uses: actions/upload-artifact@v4
         with:
           name: wpscan-report
-          path: scans/scan-result.json
+          path: |
+            scans/scan-result.json
+            scans/scan-exit-code.txt
+            scans/wpscan-errors.log
 
-      - name: Fail if critical vulnerabilities found
+      - name: Fail if vulnerabilities found
         run: |
-          if [ ! -f scans/scan-result.json ]; then
-            echo "No scan result file found. Possibly WPScan failed."
+          EXIT_CODE=$(cat scans/scan-exit-code.txt)
+          echo "WPScan exit code was: $EXIT_CODE"
+          if [ "$EXIT_CODE" -eq 5 ]; then
+            echo "Vulnerabilities detected by WPScan. Pipeline blocked."
             exit 1
           fi
-          # Validate that the file is valid JSON
-          if ! jq empty scans/scan-result.json 2>/dev/null; then
-            echo "scan-result.json is not valid JSON. First 20 lines:"
-            head -20 scans/scan-result.json
-            exit 1
-          fi
-          # Count all objects with "severity": "critical" inside the vulnerabilities section
-          CRITICAL_COUNT=$(jq '[.vulnerabilities | .. | objects | select(.severity == "critical")] | length' scans/scan-result.json)
-          if [ "$CRITICAL_COUNT" -gt 0 ]; then
-            echo "Critical vulnerabilities detected: $CRITICAL_COUNT"
-            jq '[.vulnerabilities | .. | objects | select(.severity == "critical")] | .[] | {title, fixed_in}' scans/scan-result.json
-            exit 1
-          fi
-          echo "No critical vulnerabilities found. Scan passed."
+          echo "No vulnerabilities found. Scan passed."
