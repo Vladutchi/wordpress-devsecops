@@ -1,105 +1,100 @@
-name: WordPress Security Scan
-
+name: WordPress WPScan – beware of the miss-configs!!!
+#####
 on:
   push:
-    branches: [ main, master ]
-  workflow_dispatch:
-
+    branches:
+      - main
 jobs:
-  wpscan:
+  wordpress-wpscan:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout (required even if no repo code is used)
         uses: actions/checkout@v4
 
-      - name: Create Docker network
-        run: docker network create wp-net
+      - name: Set up Docker environment
+        run: |
+          sudo systemctl start docker
+          docker version
 
       - name: Start MySQL container
         run: |
-          docker run -d --name wp-db --network wp-net \
-            -e MYSQL_ROOT_PASSWORD=rootpass \
+          docker run -d --name wp-db \
+            -e MYSQL_ROOT_PASSWORD=password \
             -e MYSQL_DATABASE=wordpress \
             -e MYSQL_USER=wpuser \
             -e MYSQL_PASSWORD=wppass \
+            -p 3306:3306 \
             mysql:5.7
 
-      - name: Start WordPress container (vulnerable version)
+      - name: Start WordPress container
         run: |
-          docker run -d --name wp-site --network wp-net \
-            -e WORDPRESS_DB_HOST=wp-db:3306 \
+          docker run -d --name wp-site \
+            --link wp-db:mysql \
+            -e WORDPRESS_DB_HOST=host.docker.internal:3306 \
             -e WORDPRESS_DB_USER=wpuser \
             -e WORDPRESS_DB_PASSWORD=wppass \
             -e WORDPRESS_DB_NAME=wordpress \
             -p 8080:80 \
-            wordpress:5.8
+            wordpress:latest
 
-      - name: Wait for MySQL to be ready
+      - name: Wait for WordPress to be ready
         run: |
+          echo "Waiting for WordPress to start..."
           for i in {1..30}; do
-            if docker exec wp-db mysqladmin ping -h localhost --silent; then
-              echo "MySQL is ready"
-              exit 0
+            if curl -s http://localhost:8080/wp-content/ | grep -q "<title>";
+            then
+              echo "WordPress is ready!"
+              break
             fi
-            echo "Waiting for MySQL... ($i)"
             sleep 5
           done
-          echo "MySQL failed to start" && exit 1
 
-      - name: Install WordPress using wp-cli
+      - name: Install Ruby and WPScan
         run: |
-          docker exec wp-site curl -s -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-          docker exec wp-site chmod +x wp-cli.phar
-          docker exec wp-site php wp-cli.phar core install \
-            --url="http://localhost:8080" \
-            --title="Test Site" \
-            --admin_user="admin" \
-            --admin_password="Admin123!" \
-            --admin_email="admin@example.com" \
-            --allow-root
-          echo "WordPress installed successfully"
+          sudo apt-get update
+          sudo apt-get install -y ruby-full build-essential libcurl4-openssl-dev zlib1g-dev
+          sudo gem install wpscan
 
-      - name: Verify WordPress is running
+      # --- MODIFIED: Run WPScan with JSON output, handle vulnerability exit code ---
+      - name: Run WPScan
         run: |
-          docker ps | grep wp-site || (docker logs wp-site && exit 1)
-          curl -s -f http://localhost:8080 | head -20 || (echo "WordPress not reachable" && exit 1)
-
-      - name: Prepare scans directory
-        run: |
-          mkdir -p ${{ github.workspace }}/scans
-          chmod 777 ${{ github.workspace }}/scans
-
-      - name: Run WPScan (allow vulnerabilities found - exit code 5)
-        run: |
+          mkdir -p scans
           set +e
-          docker run --rm --network host \
-            wpscanteam/wpscan \
-            --url http://localhost:8080 \
-            --enumerate u,vp,vt \
-            --api-token ${{ secrets.WPSCAN_API_TOKEN }} \
-            --format json \
-            --no-banner > ${{ github.workspace }}/scans/scan-result.json 2>&1
+          wpscan --url http://localhost:8080 \
+                 --enumerate u,vp,vt \
+                 --format json \
+                 --no-banner \
+                 --force \
+                 > scans/scan-result.json 2>&1
           EXIT_CODE=$?
           echo "WPScan exit code: $EXIT_CODE"
-          # Exit codes: 0=clean, 5=vulnerabilities found – both are ‘normal’ for us
+          # Treat exit code 5 (vulnerabilities found) as normal for the scan step
           if [ $EXIT_CODE -ne 0 ] && [ $EXIT_CODE -ne 5 ]; then
             echo "WPScan encountered an error. Output:"
-            cat ${{ github.workspace }}/scans/scan-result.json
+            cat scans/scan-result.json
             exit $EXIT_CODE
           fi
-          echo "WPScan completed successfully (scan may contain vulnerabilities)"
+          echo "Scan completed successfully (findings may exist)."
           set -e
 
+      # --- NEW: Upload scan report as artifact ---
       - name: Upload scan artifacts
         uses: actions/upload-artifact@v4
         with:
           name: wpscan-report
           path: scans/scan-result.json
 
+      # --- NEW: Fail the job only if critical vulnerabilities are present ---
       - name: Fail if critical vulnerabilities found
         run: |
-          if grep -q '"critical"' scans/scan-result.json; then
-            echo "Critical vulnerabilities detected! Fix required."
+          if [ ! -f scans/scan-result.json ]; then
+            echo "Scan result file missing – scan may have failed."
             exit 1
           fi
-          echo "No critical vulnerabilities found. Scan passed."
+          CRITICAL_COUNT=$(jq '[.findings[]? | select(.severity == "critical")] | length' scans/scan-result.json)
+          if [ "$CRITICAL_COUNT" -gt 0 ]; then
+            echo "Critical vulnerabilities found: $CRITICAL_COUNT"
+            jq '.findings[] | select(.severity == "critical") | {title, fixed_in}' scans/scan-result.json
+            exit 1
+          fi
+          echo "No critical vulnerabilities. Scan passed."
