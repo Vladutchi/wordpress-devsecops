@@ -73,18 +73,23 @@ jobs:
       - name: Run WPScan (allow vulnerabilities found - exit code 5)
         run: |
           set +e
+          # JSON output to scan-result.json, stderr to a separate log
           docker run --rm --network host \
             wpscanteam/wpscan \
             --url http://localhost:8080 \
             --enumerate u,vp,vt \
             --api-token "${{ secrets.WPSCAN_API_TOKEN }}" \
             --format json \
-            --no-banner > ${{ github.workspace }}/scans/scan-result.json 2>&1
+            --no-banner > ${{ github.workspace }}/scans/scan-result.json 2> ${{ github.workspace }}/scans/wpscan-errors.log
           EXIT_CODE=$?
           echo "WPScan exit code: $EXIT_CODE"
+          # Show any warnings from stderr (helps debugging without breaking JSON)
+          if [ -s ${{ github.workspace }}/scans/wpscan-errors.log ]; then
+            echo "WPScan stderr output:"
+            cat ${{ github.workspace }}/scans/wpscan-errors.log
+          fi
           if [ $EXIT_CODE -ne 0 ] && [ $EXIT_CODE -ne 5 ]; then
-            echo "WPScan encountered an error. Output:"
-            cat ${{ github.workspace }}/scans/scan-result.json
+            echo "WPScan encountered a fatal error. Exiting."
             exit $EXIT_CODE
           fi
           echo "WPScan completed successfully (scan may contain vulnerabilities)"
@@ -100,6 +105,12 @@ jobs:
         run: |
           if [ ! -f scans/scan-result.json ]; then
             echo "No scan result file found. Possibly WPScan failed."
+            exit 1
+          fi
+          # Validate that the file is valid JSON before processing
+          if ! jq empty scans/scan-result.json 2>/dev/null; then
+            echo "scan-result.json is not valid JSON. First 20 lines:"
+            head -20 scans/scan-result.json
             exit 1
           fi
           CRITICAL_COUNT=$(jq '[.findings[]? | select(.severity == "critical")] | length' scans/scan-result.json)
