@@ -70,10 +70,14 @@ jobs:
           mkdir -p ${{ github.workspace }}/scans
           chmod 777 ${{ github.workspace }}/scans
 
+      - name: Pull WPScan image
+        run: docker pull wpscanteam/wpscan
+
       - name: Run WPScan
         run: |
           set +e
           docker run --rm --network host \
+            --pull=never \
             wpscanteam/wpscan \
             --url http://localhost:8080 \
             --enumerate u,vp,vt \
