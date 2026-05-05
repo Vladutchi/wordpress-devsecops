@@ -107,16 +107,17 @@ jobs:
             echo "No scan result file found. Possibly WPScan failed."
             exit 1
           fi
-          # Validate that the file is valid JSON before processing
+          # Validate that the file is valid JSON
           if ! jq empty scans/scan-result.json 2>/dev/null; then
             echo "scan-result.json is not valid JSON. First 20 lines:"
             head -20 scans/scan-result.json
             exit 1
           fi
-          CRITICAL_COUNT=$(jq '[.findings[]? | select(.severity == "critical")] | length' scans/scan-result.json)
+          # Count all objects with "severity": "critical" inside the vulnerabilities section
+          CRITICAL_COUNT=$(jq '[.vulnerabilities | .. | objects | select(.severity == "critical")] | length' scans/scan-result.json)
           if [ "$CRITICAL_COUNT" -gt 0 ]; then
             echo "Critical vulnerabilities detected: $CRITICAL_COUNT"
-            jq '.findings[] | select(.severity == "critical") | {title, fixed_in}' scans/scan-result.json
+            jq '[.vulnerabilities | .. | objects | select(.severity == "critical")] | .[] | {title, fixed_in}' scans/scan-result.json
             exit 1
           fi
           echo "No critical vulnerabilities found. Scan passed."
