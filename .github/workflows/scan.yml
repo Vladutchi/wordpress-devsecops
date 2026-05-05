@@ -48,10 +48,8 @@ jobs:
 
       - name: Install WordPress using wp-cli
         run: |
-          # Download wp-cli
           docker exec wp-site curl -s -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
           docker exec wp-site chmod +x wp-cli.phar
-          # Run installation (allow root because container runs as root by default)
           docker exec wp-site php wp-cli.phar core install \
             --url="http://localhost:8080" \
             --title="Test Site" \
@@ -71,7 +69,7 @@ jobs:
           mkdir -p ${{ github.workspace }}/scans
           chmod 777 ${{ github.workspace }}/scans
 
-      - name: Run WPScan
+      - name: Run WPScan (allow vulnerabilities found - exit code 5)
         run: |
           set +e
           docker run --rm --network host \
@@ -83,11 +81,13 @@ jobs:
             --no-banner > ${{ github.workspace }}/scans/scan-result.json 2>&1
           EXIT_CODE=$?
           echo "WPScan exit code: $EXIT_CODE"
-          if [ $EXIT_CODE -ne 0 ]; then
+          # Exit codes: 0=clean, 5=vulnerabilities found – both are ‘normal’ for us
+          if [ $EXIT_CODE -ne 0 ] && [ $EXIT_CODE -ne 5 ]; then
             echo "WPScan encountered an error. Output:"
             cat ${{ github.workspace }}/scans/scan-result.json
             exit $EXIT_CODE
           fi
+          echo "WPScan completed successfully (scan may contain vulnerabilities)"
           set -e
 
       - name: Upload scan artifacts
