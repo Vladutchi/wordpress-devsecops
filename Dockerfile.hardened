@@ -25,5 +25,12 @@ RUN { \
     a2enconf security-hardening && \
     a2enmod headers
 
-USER wpuser
+# Configure Apache to drop privileges to wpuser at runtime
+RUN sed -i 's/APACHE_RUN_USER=www-data/APACHE_RUN_USER=wpuser/' /etc/apache2/envvars && \
+    sed -i 's/APACHE_RUN_GROUP=www-data/APACHE_RUN_GROUP=wpuser/' /etc/apache2/envvars
+
+# Ensure wpuser can write to Apache runtime directories
+RUN chown -R wpuser:wpuser /var/run/apache2 /var/log/apache2
+
+# No USER directive – container starts as root, then Apache drops to wpuser
 EXPOSE 80
