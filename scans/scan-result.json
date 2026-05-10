@@ -1,6 +1,6 @@
 {
-  "start_time": 1778421506,
-  "start_memory": 48697344,
+  "start_time": 1778421812,
+  "start_memory": 48672768,
   "target_url": "http://localhost:8080/",
   "target_ip": "::1",
   "effective_url": "http://localhost:8080/",
@@ -18,32 +18,7 @@
 
       },
       "interesting_entries": [
-        "Server: Apache/2.4.51 (Debian)",
-        "X-Powered-By: PHP/7.4.27"
-      ]
-    },
-    {
-      "url": "http://localhost:8080/xmlrpc.php",
-      "to_s": "XML-RPC seems to be enabled: http://localhost:8080/xmlrpc.php",
-      "type": "xmlrpc",
-      "found_by": "Direct Access (Aggressive Detection)",
-      "confidence": 100,
-      "confirmed_by": {
-
-      },
-      "references": {
-        "url": [
-          "http://codex.wordpress.org/XML-RPC_Pingback_API"
-        ],
-        "metasploit": [
-          "auxiliary/scanner/http/wordpress_ghost_scanner",
-          "auxiliary/dos/http/wordpress_xmlrpc_dos",
-          "auxiliary/scanner/http/wordpress_xmlrpc_login",
-          "auxiliary/scanner/http/wordpress_pingback_access"
-        ]
-      },
-      "interesting_entries": [
-
+        "Server: Apache/2.4.57 (Debian)"
       ]
     },
     {
@@ -83,385 +58,22 @@
     }
   ],
   "version": {
-    "number": "5.8.3",
-    "release_date": "2022-01-06",
+    "number": "6.4.2",
+    "release_date": "2023-12-06",
     "status": "insecure",
     "found_by": "Rss Generator (Passive Detection)",
     "confidence": 100,
     "interesting_entries": [
-      "http://localhost:8080/?feed=rss2, <generator>https://wordpress.org/?v=5.8.3</generator>",
-      "http://localhost:8080/?feed=comments-rss2, <generator>https://wordpress.org/?v=5.8.3</generator>"
+      "http://localhost:8080/?feed=rss2, <generator>https://wordpress.org/?v=6.4.2</generator>",
+      "http://localhost:8080/?feed=comments-rss2, <generator>https://wordpress.org/?v=6.4.2</generator>"
     ],
     "confirmed_by": {
 
     },
     "vulnerabilities": [
       {
-        "title": "WordPress < 5.9.2 - Prototype Pollution in jQuery",
-        "fixed_in": "5.8.4",
-        "references": {
-          "url": [
-            "https://wordpress.org/news/2022/03/wordpress-5-9-2-security-maintenance-release/"
-          ],
-          "wpvulndb": [
-            "1ac912c1-5e29-41ac-8f76-a062de254c09"
-          ]
-        }
-      },
-      {
-        "title": "WordPress < 5.9.2 / Gutenberg < 12.7.2 - Prototype Pollution via Gutenberg’s wordpress/url package",
-        "fixed_in": "5.8.4",
-        "references": {
-          "url": [
-            "https://wordpress.org/news/2022/03/wordpress-5-9-2-security-maintenance-release/",
-            "https://github.com/WordPress/gutenberg/pull/39365/files"
-          ],
-          "wpvulndb": [
-            "6e61b246-5af1-4a4f-9ca8-a8c87eb2e499"
-          ]
-        }
-      },
-      {
-        "title": "WP < 6.0.2 - Reflected Cross-Site Scripting",
-        "fixed_in": "5.8.5",
-        "references": {
-          "url": [
-            "https://wordpress.org/news/2022/08/wordpress-6-0-2-security-and-maintenance-release/"
-          ],
-          "wpvulndb": [
-            "622893b0-c2c4-4ee7-9fa1-4cecef6e36be"
-          ]
-        }
-      },
-      {
-        "title": "WP < 6.0.2 - Authenticated Stored Cross-Site Scripting",
-        "fixed_in": "5.8.5",
-        "references": {
-          "url": [
-            "https://wordpress.org/news/2022/08/wordpress-6-0-2-security-and-maintenance-release/"
-          ],
-          "wpvulndb": [
-            "3b1573d4-06b4-442b-bad5-872753118ee0"
-          ]
-        }
-      },
-      {
-        "title": "WP < 6.0.2 - SQLi via Link API",
-        "fixed_in": "5.8.5",
-        "references": {
-          "url": [
-            "https://wordpress.org/news/2022/08/wordpress-6-0-2-security-and-maintenance-release/"
-          ],
-          "wpvulndb": [
-            "601b0bf9-fed2-4675-aec7-fed3156a022f"
-          ]
-        }
-      },
-      {
-        "title": "WP < 6.0.3 - Stored XSS via wp-mail.php",
-        "fixed_in": "5.8.6",
-        "references": {
-          "url": [
-            "https://wordpress.org/news/2022/10/wordpress-6-0-3-security-release/",
-            "https://github.com/WordPress/wordpress-develop/commit/abf236fdaf94455e7bc6e30980cf70401003e283"
-          ],
-          "wpvulndb": [
-            "713bdc8b-ab7c-46d7-9847-305344a579c4"
-          ]
-        }
-      },
-      {
-        "title": "WP < 6.0.3 - Open Redirect via wp_nonce_ays",
-        "fixed_in": "5.8.6",
-        "references": {
-          "url": [
-            "https://wordpress.org/news/2022/10/wordpress-6-0-3-security-release/",
-            "https://github.com/WordPress/wordpress-develop/commit/506eee125953deb658307bb3005417cb83f32095"
-          ],
-          "wpvulndb": [
-            "926cd097-b36f-4d26-9c51-0dfab11c301b"
-          ]
-        }
-      },
-      {
-        "title": "WP < 6.0.3 - Email Address Disclosure via wp-mail.php",
-        "fixed_in": "5.8.6",
-        "references": {
-          "url": [
-            "https://wordpress.org/news/2022/10/wordpress-6-0-3-security-release/",
-            "https://github.com/WordPress/wordpress-develop/commit/5fcdee1b4d72f1150b7b762ef5fb39ab288c8d44"
-          ],
-          "wpvulndb": [
-            "c5675b59-4b1d-4f64-9876-068e05145431"
-          ]
-        }
-      },
-      {
-        "title": "WP < 6.0.3 - Reflected XSS via SQLi in Media Library",
-        "fixed_in": "5.8.6",
-        "references": {
-          "url": [
-            "https://wordpress.org/news/2022/10/wordpress-6-0-3-security-release/",
-            "https://github.com/WordPress/wordpress-develop/commit/8836d4682264e8030067e07f2f953a0f66cb76cc"
-          ],
-          "wpvulndb": [
-            "cfd8b50d-16aa-4319-9c2d-b227365c2156"
-          ]
-        }
-      },
-      {
-        "title": "WP < 6.0.3 - CSRF in wp-trackback.php",
-        "fixed_in": "5.8.6",
-        "references": {
-          "url": [
-            "https://wordpress.org/news/2022/10/wordpress-6-0-3-security-release/",
-            "https://github.com/WordPress/wordpress-develop/commit/a4f9ca17fae0b7d97ff807a3c234cf219810fae0"
-          ],
-          "wpvulndb": [
-            "b60a6557-ae78-465c-95bc-a78cf74a6dd0"
-          ]
-        }
-      },
-      {
-        "title": "WP < 6.0.3 - Stored XSS via the Customizer",
-        "fixed_in": "5.8.6",
-        "references": {
-          "url": [
-            "https://wordpress.org/news/2022/10/wordpress-6-0-3-security-release/",
-            "https://github.com/WordPress/wordpress-develop/commit/2ca28e49fc489a9bb3c9c9c0d8907a033fe056ef"
-          ],
-          "wpvulndb": [
-            "2787684c-aaef-4171-95b4-ee5048c74218"
-          ]
-        }
-      },
-      {
-        "title": "WP < 6.0.3 - Stored XSS via Comment Editing",
-        "fixed_in": "5.8.6",
-        "references": {
-          "url": [
-            "https://wordpress.org/news/2022/10/wordpress-6-0-3-security-release/",
-            "https://github.com/WordPress/wordpress-develop/commit/89c8f7919460c31c0f259453b4ffb63fde9fa955"
-          ],
-          "wpvulndb": [
-            "02d76d8e-9558-41a5-bdb6-3957dc31563b"
-          ]
-        }
-      },
-      {
-        "title": "WP < 6.0.3 - Content from Multipart Emails Leaked",
-        "fixed_in": "5.8.6",
-        "references": {
-          "url": [
-            "https://wordpress.org/news/2022/10/wordpress-6-0-3-security-release/",
-            "https://github.com/WordPress/wordpress-develop/commit/3765886b4903b319764490d4ad5905bc5c310ef8"
-          ],
-          "wpvulndb": [
-            "3f707e05-25f0-4566-88ed-d8d0aff3a872"
-          ]
-        }
-      },
-      {
-        "title": "WP < 6.0.3 - SQLi in WP_Date_Query",
-        "fixed_in": "5.8.6",
-        "references": {
-          "url": [
-            "https://wordpress.org/news/2022/10/wordpress-6-0-3-security-release/",
-            "https://github.com/WordPress/wordpress-develop/commit/d815d2e8b2a7c2be6694b49276ba3eee5166c21f"
-          ],
-          "wpvulndb": [
-            "1da03338-557f-4cb6-9a65-3379df4cce47"
-          ]
-        }
-      },
-      {
-        "title": "WP < 6.0.3 - Stored XSS via RSS Widget",
-        "fixed_in": "5.8.6",
-        "references": {
-          "url": [
-            "https://wordpress.org/news/2022/10/wordpress-6-0-3-security-release/",
-            "https://github.com/WordPress/wordpress-develop/commit/929cf3cb9580636f1ae3fe944b8faf8cca420492"
-          ],
-          "wpvulndb": [
-            "58d131f5-f376-4679-b604-2b888de71c5b"
-          ]
-        }
-      },
-      {
-        "title": "WP < 6.0.3 - Data Exposure via REST Terms/Tags Endpoint",
-        "fixed_in": "5.8.6",
-        "references": {
-          "url": [
-            "https://wordpress.org/news/2022/10/wordpress-6-0-3-security-release/",
-            "https://github.com/WordPress/wordpress-develop/commit/ebaac57a9ac0174485c65de3d32ea56de2330d8e"
-          ],
-          "wpvulndb": [
-            "b27a8711-a0c0-4996-bd6a-01734702913e"
-          ]
-        }
-      },
-      {
-        "title": "WP < 6.0.3 - Multiple Stored XSS via Gutenberg",
-        "fixed_in": "5.8.6",
-        "references": {
-          "url": [
-            "https://wordpress.org/news/2022/10/wordpress-6-0-3-security-release/",
-            "https://github.com/WordPress/gutenberg/pull/45045/files"
-          ],
-          "wpvulndb": [
-            "f513c8f6-2e1c-45ae-8a58-36b6518e2aa9"
-          ]
-        }
-      },
-      {
-        "title": "WP <= 6.2 - Unauthenticated Blind SSRF via DNS Rebinding",
-        "fixed_in": null,
-        "references": {
-          "cve": [
-            "2022-3590"
-          ],
-          "url": [
-            "https://blog.sonarsource.com/wordpress-core-unauthenticated-blind-ssrf/"
-          ],
-          "wpvulndb": [
-            "c8814e6e-78b3-4f63-a1d3-6906a84c1f11"
-          ]
-        }
-      },
-      {
-        "title": "WP < 6.2.1 - Directory Traversal via Translation Files",
-        "fixed_in": "5.8.7",
-        "references": {
-          "cve": [
-            "2023-2745"
-          ],
-          "url": [
-            "https://wordpress.org/news/2023/05/wordpress-6-2-1-maintenance-security-release/"
-          ],
-          "wpvulndb": [
-            "2999613a-b8c8-4ec0-9164-5dfe63adf6e6"
-          ]
-        }
-      },
-      {
-        "title": "WP < 6.2.1 - Thumbnail Image Update via CSRF",
-        "fixed_in": "5.8.7",
-        "references": {
-          "url": [
-            "https://wordpress.org/news/2023/05/wordpress-6-2-1-maintenance-security-release/"
-          ],
-          "wpvulndb": [
-            "a03d744a-9839-4167-a356-3e7da0f1d532"
-          ]
-        }
-      },
-      {
-        "title": "WP < 6.2.1 - Contributor+ Stored XSS via Open Embed Auto Discovery",
-        "fixed_in": "5.8.7",
-        "references": {
-          "url": [
-            "https://wordpress.org/news/2023/05/wordpress-6-2-1-maintenance-security-release/"
-          ],
-          "wpvulndb": [
-            "3b574451-2852-4789-bc19-d5cc39948db5"
-          ]
-        }
-      },
-      {
-        "title": "WP < 6.2.2 - Shortcode Execution in User Generated Data",
-        "fixed_in": "5.8.7",
-        "references": {
-          "url": [
-            "https://wordpress.org/news/2023/05/wordpress-6-2-1-maintenance-security-release/",
-            "https://wordpress.org/news/2023/05/wordpress-6-2-2-security-release/"
-          ],
-          "wpvulndb": [
-            "ef289d46-ea83-4fa5-b003-0352c690fd89"
-          ]
-        }
-      },
-      {
-        "title": "WP < 6.2.1 - Contributor+ Content Injection",
-        "fixed_in": "5.8.7",
-        "references": {
-          "url": [
-            "https://wordpress.org/news/2023/05/wordpress-6-2-1-maintenance-security-release/"
-          ],
-          "wpvulndb": [
-            "1527ebdb-18bc-4f9d-9c20-8d729a628670"
-          ]
-        }
-      },
-      {
-        "title": "WP 5.6-6.3.1 - Reflected XSS via Application Password Requests",
-        "fixed_in": "5.8.8",
-        "references": {
-          "url": [
-            "https://wordpress.org/news/2023/10/wordpress-6-3-2-maintenance-and-security-release/"
-          ],
-          "wpvulndb": [
-            "da1419cc-d821-42d6-b648-bdb3c70d91f2"
-          ]
-        }
-      },
-      {
-        "title": "WP < 6.3.2 - Denial of Service via Cache Poisoning",
-        "fixed_in": "5.8.8",
-        "references": {
-          "url": [
-            "https://wordpress.org/news/2023/10/wordpress-6-3-2-maintenance-and-security-release/"
-          ],
-          "wpvulndb": [
-            "6d80e09d-34d5-4fda-81cb-e703d0e56e4f"
-          ]
-        }
-      },
-      {
-        "title": "WP < 6.3.2 - Subscriber+ Arbitrary Shortcode Execution",
-        "fixed_in": "5.8.8",
-        "references": {
-          "url": [
-            "https://wordpress.org/news/2023/10/wordpress-6-3-2-maintenance-and-security-release/"
-          ],
-          "wpvulndb": [
-            "3615aea0-90aa-4f9a-9792-078a90af7f59"
-          ]
-        }
-      },
-      {
-        "title": "WP < 6.3.2 - Contributor+ Comment Disclosure",
-        "fixed_in": "5.8.8",
-        "references": {
-          "cve": [
-            "2023-39999"
-          ],
-          "url": [
-            "https://wordpress.org/news/2023/10/wordpress-6-3-2-maintenance-and-security-release/"
-          ],
-          "wpvulndb": [
-            "d35b2a3d-9b41-4b4f-8e87-1b8ccb370b9f"
-          ]
-        }
-      },
-      {
-        "title": "WP < 6.3.2 - Unauthenticated Post Author Email Disclosure",
-        "fixed_in": "5.8.8",
-        "references": {
-          "cve": [
-            "2023-5561"
-          ],
-          "url": [
-            "https://wpscan.com/blog/email-leak-oracle-vulnerability-addressed-in-wordpress-6-3-2/",
-            "https://wordpress.org/news/2023/10/wordpress-6-3-2-maintenance-and-security-release/"
-          ],
-          "wpvulndb": [
-            "19380917-4c27-4095-abf1-eba6f913b441"
-          ]
-        }
-      },
-      {
         "title": "WordPress < 6.4.3 - Deserialization of Untrusted Data",
-        "fixed_in": "5.8.9",
+        "fixed_in": "6.4.3",
         "references": {
           "url": [
             "https://wordpress.org/news/2024/01/wordpress-6-4-3-maintenance-and-security-release/"
@@ -473,7 +85,7 @@
       },
       {
         "title": "WordPress < 6.4.3 - Admin+ PHP File Upload",
-        "fixed_in": "5.8.9",
+        "fixed_in": "6.4.3",
         "references": {
           "url": [
             "https://wordpress.org/news/2024/01/wordpress-6-4-3-maintenance-and-security-release/"
@@ -484,8 +96,20 @@
         }
       },
       {
+        "title": "WP < 6.5.2 - Unauthenticated Stored XSS",
+        "fixed_in": "6.4.4",
+        "references": {
+          "url": [
+            "https://wordpress.org/news/2024/04/wordpress-6-5-2-maintenance-and-security-release/"
+          ],
+          "wpvulndb": [
+            "1a5c5df1-57ee-4190-a336-b0266962078f"
+          ]
+        }
+      },
+      {
         "title": "WordPress < 6.5.5 - Contributor+ Stored XSS in HTML API",
-        "fixed_in": "5.8.10",
+        "fixed_in": "6.4.5",
         "references": {
           "url": [
             "https://wordpress.org/news/2024/06/wordpress-6-5-5/"
@@ -497,7 +121,7 @@
       },
       {
         "title": "WordPress < 6.5.5 - Contributor+ Stored XSS in Template-Part Block",
-        "fixed_in": "5.8.10",
+        "fixed_in": "6.4.5",
         "references": {
           "url": [
             "https://wordpress.org/news/2024/06/wordpress-6-5-5/"
@@ -509,7 +133,7 @@
       },
       {
         "title": "WordPress < 6.5.5 - Contributor+ Path Traversal in Template-Part Block",
-        "fixed_in": "5.8.10",
+        "fixed_in": "6.4.5",
         "references": {
           "url": [
             "https://wordpress.org/news/2024/06/wordpress-6-5-5/"
@@ -521,7 +145,7 @@
       },
       {
         "title": "WP < 6.8.3 - Author+ DOM Stored XSS",
-        "fixed_in": "5.8.12",
+        "fixed_in": "6.4.7",
         "references": {
           "cve": [
             "2025-58674"
@@ -537,7 +161,7 @@
       },
       {
         "title": "WP < 6.8.3 - Contributor+ Sensitive Data Disclosure",
-        "fixed_in": "5.8.12",
+        "fixed_in": "6.4.7",
         "references": {
           "cve": [
             "2025-58246"
@@ -554,33 +178,33 @@
     ]
   },
   "main_theme": {
-    "slug": "twentytwentyone",
-    "location": "http://localhost:8080/wp-content/themes/twentytwentyone/",
-    "latest_version": "2.7",
+    "slug": "twentytwentyfour",
+    "location": "http://localhost:8080/wp-content/themes/twentytwentyfour/",
+    "latest_version": "1.4",
     "last_updated": "2025-12-03T00:00:00.000Z",
     "outdated": true,
-    "readme_url": "http://localhost:8080/wp-content/themes/twentytwentyone/readme.txt",
+    "readme_url": "http://localhost:8080/wp-content/themes/twentytwentyfour/readme.txt",
     "directory_listing": false,
     "error_log_url": null,
-    "style_url": "http://localhost:8080/wp-content/themes/twentytwentyone/style.css?ver=1.4",
-    "style_name": "Twenty Twenty-One",
-    "style_uri": "https://wordpress.org/themes/twentytwentyone/",
-    "description": "Twenty Twenty-One is a blank canvas for your ideas and it makes the block editor your best brush. With new block patterns, which allow you to create a beautiful layout in a matter of seconds, this theme’s soft colors and eye-catching — yet timeless — design will let your work shine. Take it for a spin! See how Twenty Twenty-One elevates your portfolio, business website, or personal blog.",
+    "style_url": "http://localhost:8080/wp-content/themes/twentytwentyfour/style.css",
+    "style_name": "Twenty Twenty-Four",
+    "style_uri": "https://wordpress.org/themes/twentytwentyfour/",
+    "description": "Twenty Twenty-Four is designed to be flexible, versatile and applicable to any website. Its collection of templates and patterns tailor to different needs, such as presenting a business, blogging and writing or showcasing work. A multitude of possibilities open up with just a few adjustments to color and typography. Twenty Twenty-Four comes with style variations and full page designs to help speed up the site building process, is fully compatible with the site editor, and takes advantage of new design tools introduced in WordPress 6.4.",
     "author": "the WordPress team",
-    "author_uri": "https://wordpress.org/",
+    "author_uri": "https://wordpress.org",
     "template": null,
     "license": "GNU General Public License v2 or later",
     "license_uri": "http://www.gnu.org/licenses/gpl-2.0.html",
-    "tags": "one-column, accessibility-ready, custom-colors, custom-menu, custom-logo, editor-style, featured-images, footer-widgets, block-patterns, rtl-language-support, sticky-post, threaded-comments, translation-ready",
-    "text_domain": "twentytwentyone",
-    "found_by": "Css Style In Homepage (Passive Detection)",
-    "confidence": 100,
+    "tags": "one-column, custom-colors, custom-menu, custom-logo, editor-style, featured-images, full-site-editing, block-patterns, rtl-language-support, sticky-post, threaded-comments, translation-ready, wide-blocks, block-styles, style-variations, accessibility-ready, blog, portfolio, news",
+    "text_domain": "twentytwentyfour",
+    "found_by": "Urls In Homepage (Passive Detection)",
+    "confidence": 16,
     "interesting_entries": [
 
     ],
     "confirmed_by": {
-      "Css Style In 404 Page (Passive Detection)": {
-        "confidence": 70,
+      "Urls In 404 Page (Passive Detection)": {
+        "confidence": 8,
         "interesting_entries": [
 
         ]
@@ -590,11 +214,11 @@
 
     ],
     "version": {
-      "number": "1.4",
+      "number": "1.0",
       "confidence": 80,
       "found_by": "Style (Passive Detection)",
       "interesting_entries": [
-        "http://localhost:8080/wp-content/themes/twentytwentyone/style.css?ver=1.4, Match: 'Version: 1.4'"
+        "http://localhost:8080/wp-content/themes/twentytwentyfour/style.css, Match: 'Version: 1.0'"
       ],
       "confirmed_by": {
 
@@ -643,16 +267,16 @@
   "vuln_api": {
     "plan": "free",
     "requests_done_during_scan": 2,
-    "requests_remaining": 15
+    "requests_remaining": 13
   },
-  "stop_time": 1778421526,
-  "elapsed": 19,
-  "requests_done": 1363,
-  "cached_requests": 10,
-  "data_sent": 370890,
-  "data_sent_humanised": "362.197 KB",
-  "data_received": 8078886,
-  "data_received_humanised": "7.705 MB",
-  "used_memory": 317366272,
-  "used_memory_humanised": "302.664 MB"
+  "stop_time": 1778421851,
+  "elapsed": 39,
+  "requests_done": 1361,
+  "cached_requests": 11,
+  "data_sent": 370352,
+  "data_sent_humanised": "361.672 KB",
+  "data_received": 56028884,
+  "data_received_humanised": "53.433 MB",
+  "used_memory": 425988096,
+  "used_memory_humanised": "406.254 MB"
 }
