@@ -24,6 +24,6 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: ./Dockerfile
+          file: ./Dockerfile.hardened
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/wordpress-hardened:latest
