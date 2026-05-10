@@ -1,0 +1,173 @@
+{
+  "start_time": 1778423430,
+  "start_memory": 48742400,
+  "target_url": "http://localhost:8080/",
+  "target_ip": "::1",
+  "effective_url": "http://localhost:8080/",
+  "interesting_findings": [
+    {
+      "url": "http://localhost:8080/",
+      "to_s": "Headers",
+      "type": "headers",
+      "found_by": "Headers (Passive Detection)",
+      "confidence": 100,
+      "confirmed_by": {
+
+      },
+      "references": {
+
+      },
+      "interesting_entries": [
+        "Server: Apache/2.4.67 (Debian)"
+      ]
+    },
+    {
+      "url": "http://localhost:8080/readme.html",
+      "to_s": "WordPress readme found: http://localhost:8080/readme.html",
+      "type": "readme",
+      "found_by": "Direct Access (Aggressive Detection)",
+      "confidence": 100,
+      "confirmed_by": {
+
+      },
+      "references": {
+
+      },
+      "interesting_entries": [
+
+      ]
+    },
+    {
+      "url": "http://localhost:8080/wp-cron.php",
+      "to_s": "The external WP-Cron seems to be enabled: http://localhost:8080/wp-cron.php",
+      "type": "wp_cron",
+      "found_by": "Direct Access (Aggressive Detection)",
+      "confidence": 60,
+      "confirmed_by": {
+
+      },
+      "references": {
+        "url": [
+          "https://www.iplocation.net/defend-wordpress-from-ddos",
+          "https://github.com/wpscanteam/wpscan/issues/1299"
+        ]
+      },
+      "interesting_entries": [
+
+      ]
+    }
+  ],
+  "version": {
+    "number": "6.9.4",
+    "release_date": "2026-03-11",
+    "status": "latest",
+    "found_by": "Rss Generator (Passive Detection)",
+    "confidence": 100,
+    "interesting_entries": [
+      "http://localhost:8080/?feed=rss2, <generator>https://wordpress.org/?v=6.9.4</generator>",
+      "http://localhost:8080/?feed=comments-rss2, <generator>https://wordpress.org/?v=6.9.4</generator>"
+    ],
+    "confirmed_by": {
+
+    },
+    "vulnerabilities": [
+
+    ]
+  },
+  "main_theme": {
+    "slug": "twentytwentyfive",
+    "location": "http://localhost:8080/wp-content/themes/twentytwentyfive/",
+    "latest_version": "1.4",
+    "last_updated": "2025-12-03T00:00:00.000Z",
+    "outdated": false,
+    "readme_url": "http://localhost:8080/wp-content/themes/twentytwentyfive/readme.txt",
+    "directory_listing": false,
+    "error_log_url": null,
+    "style_url": "http://localhost:8080/wp-content/themes/twentytwentyfive/style.css",
+    "style_name": "Twenty Twenty-Five",
+    "style_uri": "https://wordpress.org/themes/twentytwentyfive/",
+    "description": "Twenty Twenty-Five emphasizes simplicity and adaptability. It offers flexible design options, supported by a variety of patterns for different page types, such as services and landing pages, making it ideal for building personal blogs, professional portfolios, online magazines, or business websites. Its templates cater to various blog styles, from text-focused to image-heavy layouts. Additionally, it supports international typography and diverse color palettes, ensuring accessibility and customization for users worldwide.",
+    "author": "the WordPress team",
+    "author_uri": "https://wordpress.org",
+    "template": null,
+    "license": "GNU General Public License v2 or later",
+    "license_uri": "http://www.gnu.org/licenses/gpl-2.0.html",
+    "tags": "one-column, custom-colors, custom-menu, custom-logo, editor-style, featured-images, full-site-editing, block-patterns, rtl-language-support, sticky-post, threaded-comments, translation-ready, wide-blocks, block-styles, style-variations, accessibility-ready, blog, portfolio, news",
+    "text_domain": "twentytwentyfive",
+    "found_by": "Urls In Homepage (Passive Detection)",
+    "confidence": 4,
+    "interesting_entries": [
+
+    ],
+    "confirmed_by": {
+      "Urls In 404 Page (Passive Detection)": {
+        "confidence": 2,
+        "interesting_entries": [
+
+        ]
+      }
+    },
+    "vulnerabilities": [
+
+    ],
+    "version": {
+      "number": "1.4",
+      "confidence": 80,
+      "found_by": "Style (Passive Detection)",
+      "interesting_entries": [
+        "http://localhost:8080/wp-content/themes/twentytwentyfive/style.css, Match: 'Version: 1.4'"
+      ],
+      "confirmed_by": {
+
+      }
+    },
+    "parents": [
+
+    ]
+  },
+  "plugins": {
+
+  },
+  "themes": {
+
+  },
+  "users": {
+    "admin": {
+      "id": null,
+      "found_by": "Rss Generator (Passive Detection)",
+      "confidence": 100,
+      "interesting_entries": [
+
+      ],
+      "confirmed_by": {
+        "Author Id Brute Forcing - Author Pattern (Aggressive Detection)": {
+          "confidence": 100,
+          "interesting_entries": [
+
+          ]
+        },
+        "Login Error Messages (Aggressive Detection)": {
+          "confidence": 100,
+          "interesting_entries": [
+
+          ]
+        }
+      }
+    }
+  },
+  "vuln_api": {
+    "plan": "free",
+    "requests_done_during_scan": 2,
+    "requests_remaining": 3
+  },
+  "stop_time": 1778423466,
+  "elapsed": 35,
+  "requests_done": 1362,
+  "cached_requests": 11,
+  "data_sent": 370557,
+  "data_sent_humanised": "361.872 KB",
+  "data_received": 43832147,
+  "data_received_humanised": "41.802 MB",
+  "used_memory": 360034304,
+  "used_memory_humanised": "343.355 MB"
+}
