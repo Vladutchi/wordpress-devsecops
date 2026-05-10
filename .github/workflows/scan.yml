@@ -38,7 +38,7 @@ jobs:
           done
           echo "MySQL failed to start" && exit 1
 
-      - name: Start WordPress container (vulnerable version)
+      - name: Start WordPress container (hardened version)
         run: |
           docker run -d --name wp-site --network wp-net \
             -e WORDPRESS_DB_HOST=wp-db:3306 \
@@ -46,7 +46,7 @@ jobs:
             -e WORDPRESS_DB_PASSWORD="${{ secrets.MYSQL_PASSWORD }}" \
             -e WORDPRESS_DB_NAME="${{ secrets.MYSQL_DATABASE }}" \
             -p 8080:80 \
-            wordpress:5.8
+            ${{ secrets.DOCKER_USERNAME }}/wordpress-hardened:latest
 
       - name: Install WordPress using wp-cli
         run: |
