@@ -1,6 +1,6 @@
 {
-  "start_time": 1778422155,
-  "start_memory": 48676864,
+  "start_time": 1778423008,
+  "start_memory": 48599040,
   "target_url": "http://localhost:8080/",
   "target_ip": "::1",
   "effective_url": "http://localhost:8080/",
@@ -18,7 +18,7 @@
 
       },
       "interesting_entries": [
-        "Server: Apache/2.4.57 (Debian)"
+        "Server: Apache/2.4.67 (Debian)"
       ]
     },
     {
@@ -58,153 +58,50 @@
     }
   ],
   "version": {
-    "number": "6.4.2",
-    "release_date": "2023-12-06",
-    "status": "insecure",
+    "number": "6.9.4",
+    "release_date": "2026-03-11",
+    "status": "latest",
     "found_by": "Rss Generator (Passive Detection)",
     "confidence": 100,
     "interesting_entries": [
-      "http://localhost:8080/?feed=rss2, <generator>https://wordpress.org/?v=6.4.2</generator>",
-      "http://localhost:8080/?feed=comments-rss2, <generator>https://wordpress.org/?v=6.4.2</generator>"
+      "http://localhost:8080/?feed=rss2, <generator>https://wordpress.org/?v=6.9.4</generator>",
+      "http://localhost:8080/?feed=comments-rss2, <generator>https://wordpress.org/?v=6.9.4</generator>"
     ],
     "confirmed_by": {
 
     },
     "vulnerabilities": [
-      {
-        "title": "WordPress < 6.4.3 - Deserialization of Untrusted Data",
-        "fixed_in": "6.4.3",
-        "references": {
-          "url": [
-            "https://wordpress.org/news/2024/01/wordpress-6-4-3-maintenance-and-security-release/"
-          ],
-          "wpvulndb": [
-            "5e9804e5-bbd4-4836-a5f0-b4388cc39225"
-          ]
-        }
-      },
-      {
-        "title": "WordPress < 6.4.3 - Admin+ PHP File Upload",
-        "fixed_in": "6.4.3",
-        "references": {
-          "url": [
-            "https://wordpress.org/news/2024/01/wordpress-6-4-3-maintenance-and-security-release/"
-          ],
-          "wpvulndb": [
-            "a8e12fbe-c70b-4078-9015-cf57a05bdd4a"
-          ]
-        }
-      },
-      {
-        "title": "WP < 6.5.2 - Unauthenticated Stored XSS",
-        "fixed_in": "6.4.4",
-        "references": {
-          "url": [
-            "https://wordpress.org/news/2024/04/wordpress-6-5-2-maintenance-and-security-release/"
-          ],
-          "wpvulndb": [
-            "1a5c5df1-57ee-4190-a336-b0266962078f"
-          ]
-        }
-      },
-      {
-        "title": "WordPress < 6.5.5 - Contributor+ Stored XSS in HTML API",
-        "fixed_in": "6.4.5",
-        "references": {
-          "url": [
-            "https://wordpress.org/news/2024/06/wordpress-6-5-5/"
-          ],
-          "wpvulndb": [
-            "2c63f136-4c1f-4093-9a8c-5e51f19eae28"
-          ]
-        }
-      },
-      {
-        "title": "WordPress < 6.5.5 - Contributor+ Stored XSS in Template-Part Block",
-        "fixed_in": "6.4.5",
-        "references": {
-          "url": [
-            "https://wordpress.org/news/2024/06/wordpress-6-5-5/"
-          ],
-          "wpvulndb": [
-            "7c448f6d-4531-4757-bff0-be9e3220bbbb"
-          ]
-        }
-      },
-      {
-        "title": "WordPress < 6.5.5 - Contributor+ Path Traversal in Template-Part Block",
-        "fixed_in": "6.4.5",
-        "references": {
-          "url": [
-            "https://wordpress.org/news/2024/06/wordpress-6-5-5/"
-          ],
-          "wpvulndb": [
-            "36232787-754a-4234-83d6-6ded5e80251c"
-          ]
-        }
-      },
-      {
-        "title": "WP < 6.8.3 - Author+ DOM Stored XSS",
-        "fixed_in": "6.4.7",
-        "references": {
-          "cve": [
-            "2025-58674"
-          ],
-          "url": [
-            "https://patchstack.com/database/wordpress/wordpress/wordpress/vulnerability/wordpress-wordpress-wordpress-6-8-2-cross-site-scripting-xss-vulnerability",
-            " https://wordpress.org/news/2025/09/wordpress-6-8-3-release/"
-          ],
-          "wpvulndb": [
-            "c4616b57-770f-4c40-93f8-29571c80330a"
-          ]
-        }
-      },
-      {
-        "title": "WP < 6.8.3 - Contributor+ Sensitive Data Disclosure",
-        "fixed_in": "6.4.7",
-        "references": {
-          "cve": [
-            "2025-58246"
-          ],
-          "url": [
-            "https://patchstack.com/database/wordpress/wordpress/wordpress/vulnerability/wordpress-wordpress-wordpress-6-8-2-sensitive-data-exposure-vulnerability",
-            "https://wordpress.org/news/2025/09/wordpress-6-8-3-release/"
-          ],
-          "wpvulndb": [
-            "1e2dad30-dd95-4142-903b-4d5c580eaad2"
-          ]
-        }
-      }
+
     ]
   },
   "main_theme": {
-    "slug": "twentytwentyfour",
-    "location": "http://localhost:8080/wp-content/themes/twentytwentyfour/",
+    "slug": "twentytwentyfive",
+    "location": "http://localhost:8080/wp-content/themes/twentytwentyfive/",
     "latest_version": "1.4",
     "last_updated": "2025-12-03T00:00:00.000Z",
-    "outdated": true,
-    "readme_url": "http://localhost:8080/wp-content/themes/twentytwentyfour/readme.txt",
+    "outdated": false,
+    "readme_url": "http://localhost:8080/wp-content/themes/twentytwentyfive/readme.txt",
     "directory_listing": false,
     "error_log_url": null,
-    "style_url": "http://localhost:8080/wp-content/themes/twentytwentyfour/style.css",
-    "style_name": "Twenty Twenty-Four",
-    "style_uri": "https://wordpress.org/themes/twentytwentyfour/",
-    "description": "Twenty Twenty-Four is designed to be flexible, versatile and applicable to any website. Its collection of templates and patterns tailor to different needs, such as presenting a business, blogging and writing or showcasing work. A multitude of possibilities open up with just a few adjustments to color and typography. Twenty Twenty-Four comes with style variations and full page designs to help speed up the site building process, is fully compatible with the site editor, and takes advantage of new design tools introduced in WordPress 6.4.",
+    "style_url": "http://localhost:8080/wp-content/themes/twentytwentyfive/style.css",
+    "style_name": "Twenty Twenty-Five",
+    "style_uri": "https://wordpress.org/themes/twentytwentyfive/",
+    "description": "Twenty Twenty-Five emphasizes simplicity and adaptability. It offers flexible design options, supported by a variety of patterns for different page types, such as services and landing pages, making it ideal for building personal blogs, professional portfolios, online magazines, or business websites. Its templates cater to various blog styles, from text-focused to image-heavy layouts. Additionally, it supports international typography and diverse color palettes, ensuring accessibility and customization for users worldwide.",
     "author": "the WordPress team",
     "author_uri": "https://wordpress.org",
     "template": null,
     "license": "GNU General Public License v2 or later",
     "license_uri": "http://www.gnu.org/licenses/gpl-2.0.html",
     "tags": "one-column, custom-colors, custom-menu, custom-logo, editor-style, featured-images, full-site-editing, block-patterns, rtl-language-support, sticky-post, threaded-comments, translation-ready, wide-blocks, block-styles, style-variations, accessibility-ready, blog, portfolio, news",
-    "text_domain": "twentytwentyfour",
+    "text_domain": "twentytwentyfive",
     "found_by": "Urls In Homepage (Passive Detection)",
-    "confidence": 16,
+    "confidence": 4,
     "interesting_entries": [
 
     ],
     "confirmed_by": {
       "Urls In 404 Page (Passive Detection)": {
-        "confidence": 8,
+        "confidence": 2,
         "interesting_entries": [
 
         ]
@@ -214,11 +111,11 @@
 
     ],
     "version": {
-      "number": "1.0",
+      "number": "1.4",
       "confidence": 80,
       "found_by": "Style (Passive Detection)",
       "interesting_entries": [
-        "http://localhost:8080/wp-content/themes/twentytwentyfour/style.css, Match: 'Version: 1.0'"
+        "http://localhost:8080/wp-content/themes/twentytwentyfive/style.css, Match: 'Version: 1.4'"
       ],
       "confirmed_by": {
 
@@ -237,18 +134,12 @@
   "users": {
     "admin": {
       "id": null,
-      "found_by": "Author Posts - Display Name (Passive Detection)",
+      "found_by": "Rss Generator (Passive Detection)",
       "confidence": 100,
       "interesting_entries": [
 
       ],
       "confirmed_by": {
-        "Rss Generator (Passive Detection)": {
-          "confidence": 50,
-          "interesting_entries": [
-
-          ]
-        },
         "Author Id Brute Forcing - Author Pattern (Aggressive Detection)": {
           "confidence": 100,
           "interesting_entries": [
@@ -267,16 +158,16 @@
   "vuln_api": {
     "plan": "free",
     "requests_done_during_scan": 2,
-    "requests_remaining": 11
+    "requests_remaining": 7
   },
-  "stop_time": 1778422193,
-  "elapsed": 38,
-  "requests_done": 1361,
+  "stop_time": 1778423044,
+  "elapsed": 36,
+  "requests_done": 1362,
   "cached_requests": 11,
-  "data_sent": 370352,
-  "data_sent_humanised": "361.672 KB",
-  "data_received": 56028884,
-  "data_received_humanised": "53.433 MB",
-  "used_memory": 381440000,
-  "used_memory_humanised": "363.77 MB"
+  "data_sent": 370557,
+  "data_sent_humanised": "361.872 KB",
+  "data_received": 43832151,
+  "data_received_humanised": "41.802 MB",
+  "used_memory": 360419328,
+  "used_memory_humanised": "343.723 MB"
 }
