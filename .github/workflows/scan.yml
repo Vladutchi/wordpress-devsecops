@@ -1,9 +1,11 @@
 name: WordPress Security Scan
 
 on:
-  push:
-    branches: [ main, master ]
   workflow_dispatch:
+  workflow_run:
+    workflows: ["Build and Push Hardened WordPress Image"]
+    types:
+      - completed
 
 jobs:
   wpscan:
@@ -11,6 +13,12 @@ jobs:
     permissions:
       contents: write          # required to push scan results back to the repo
     steps:
+      - name: Abort if build workflow did not succeed
+        if: github.event.workflow_run.conclusion != 'success'
+        run: |
+          echo "Triggering build workflow did not succeed. Skipping scan."
+          exit 0
+
       - name: Checkout code
         uses: actions/checkout@v4
 
