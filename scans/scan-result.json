@@ -1,6 +1,8 @@
 {
-  "start_time": 1778423430,
-  "start_memory": 48742400,
+  "start_time": 1780586259,
+  "start_memory": 55439360,
+  "command_line": "wpscan --url http://localhost:8080 --enumerate u,vp,vt --api-token [REDACTED] --format json --no-banner",
+  "hostname": "runnervm3jyl0",
   "target_url": "http://localhost:8080/",
   "target_ip": "::1",
   "effective_url": "http://localhost:8080/",
@@ -57,28 +59,15 @@
       ]
     }
   ],
-  "version": {
-    "number": "6.9.4",
-    "release_date": "2026-03-11",
-    "status": "latest",
-    "found_by": "Rss Generator (Passive Detection)",
-    "confidence": 100,
-    "interesting_entries": [
-      "http://localhost:8080/?feed=rss2, <generator>https://wordpress.org/?v=6.9.4</generator>",
-      "http://localhost:8080/?feed=comments-rss2, <generator>https://wordpress.org/?v=6.9.4</generator>"
-    ],
-    "confirmed_by": {
-
-    },
-    "vulnerabilities": [
-
-    ]
-  },
+  "version": null,
   "main_theme": {
     "slug": "twentytwentyfive",
     "location": "http://localhost:8080/wp-content/themes/twentytwentyfive/",
-    "latest_version": "1.4",
-    "last_updated": "2025-12-03T00:00:00.000Z",
+    "latest_version": "1.5",
+    "last_updated": "2026-05-20T00:00:00Z",
+    "last_updated_relative": "15 days ago",
+    "last_updated_source": "WordPress.org",
+    "active_installs": 1000000,
     "outdated": false,
     "readme_url": "http://localhost:8080/wp-content/themes/twentytwentyfive/readme.txt",
     "directory_listing": false,
@@ -111,11 +100,11 @@
 
     ],
     "version": {
-      "number": "1.4",
+      "number": "1.5",
       "confidence": 80,
       "found_by": "Style (Passive Detection)",
       "interesting_entries": [
-        "http://localhost:8080/wp-content/themes/twentytwentyfive/style.css, Match: 'Version: 1.4'"
+        "http://localhost:8080/wp-content/themes/twentytwentyfive/style.css, Match: 'Version: 1.5'"
       ],
       "confirmed_by": {
 
@@ -126,7 +115,47 @@
     ]
   },
   "plugins": {
+    "akismet": {
+      "slug": "akismet",
+      "location": "http://localhost:8080/wp-content/plugins/akismet/",
+      "latest_version": "5.7",
+      "last_updated": "2026-04-23T22:34:00Z",
+      "last_updated_relative": "1 month ago",
+      "last_updated_source": "WordPress.org",
+      "active_installs": 6000000,
+      "outdated": false,
+      "readme_url": false,
+      "directory_listing": false,
+      "error_log_url": null,
+      "found_by": "Known Locations (Aggressive Detection)",
+      "confidence": 80,
+      "interesting_entries": [
+        "http://localhost:8080/wp-content/plugins/akismet/, status: 403"
+      ],
+      "confirmed_by": {
 
+      },
+      "vulnerabilities": [
+        {
+          "title": "Akismet 2.5.0-3.1.4 - Unauthenticated Stored Cross-Site Scripting (XSS)",
+          "uuid": "1a2f3094-5970-4251-9ed0-ec595a0cd26c",
+          "fixed_in": "3.1.5",
+          "references": {
+            "cve": [
+              "2015-9357"
+            ],
+            "url": [
+              "http://blog.akismet.com/2015/10/13/akismet-3-1-5-wordpress/",
+              "https://blog.sucuri.net/2015/10/security-advisory-stored-xss-in-akismet-wordpress-plugin.html"
+            ],
+            "wpvulndb": [
+              "1a2f3094-5970-4251-9ed0-ec595a0cd26c"
+            ]
+          }
+        }
+      ],
+      "version": null
+    }
   },
   "themes": {
 
@@ -158,16 +187,27 @@
   "vuln_api": {
     "plan": "free",
     "requests_done_during_scan": 2,
-    "requests_remaining": 3
+    "requests_remaining": 23
   },
-  "stop_time": 1778423466,
-  "elapsed": 35,
-  "requests_done": 1362,
-  "cached_requests": 11,
-  "data_sent": 370557,
-  "data_sent_humanised": "361.872 KB",
-  "data_received": 43832147,
-  "data_received_humanised": "41.802 MB",
-  "used_memory": 360034304,
-  "used_memory_humanised": "343.355 MB"
+  "stop_time": 1780586651,
+  "elapsed": 392,
+  "requests_done": 17319,
+  "cached_requests": 19,
+  "response_status_codes": {
+    "200": 17143,
+    "301": 159,
+    "404": 9,
+    "403": 7,
+    "302": 1
+  },
+  "response_status_codes_warning": false,
+  "response_status_codes_warnings": [
+
+  ],
+  "data_sent": 4868770,
+  "data_sent_humanised": "4.643 MB",
+  "data_received": 588209931,
+  "data_received_humanised": "560.961 MB",
+  "used_memory": 365604864,
+  "used_memory_humanised": "348.668 MB"
 }
