@@ -1,6 +1,6 @@
 {
-  "start_time": 1780586259,
-  "start_memory": 55439360,
+  "start_time": 1780586961,
+  "start_memory": 55459840,
   "command_line": "wpscan --url http://localhost:8080 --enumerate u,vp,vt --api-token [REDACTED] --format json --no-banner",
   "hostname": "runnervm3jyl0",
   "target_url": "http://localhost:8080/",
@@ -187,10 +187,10 @@
   "vuln_api": {
     "plan": "free",
     "requests_done_during_scan": 2,
-    "requests_remaining": 23
+    "requests_remaining": 21
   },
-  "stop_time": 1780586651,
-  "elapsed": 392,
+  "stop_time": 1780587365,
+  "elapsed": 404,
   "requests_done": 17319,
   "cached_requests": 19,
   "response_status_codes": {
@@ -206,8 +206,8 @@
   ],
   "data_sent": 4868770,
   "data_sent_humanised": "4.643 MB",
-  "data_received": 588209931,
+  "data_received": 588209913,
   "data_received_humanised": "560.961 MB",
-  "used_memory": 365604864,
-  "used_memory_humanised": "348.668 MB"
+  "used_memory": 399249408,
+  "used_memory_humanised": "380.754 MB"
 }
