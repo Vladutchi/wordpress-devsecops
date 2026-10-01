@@ -1,5 +1,13 @@
 FROM wordpress:latest
 
+# Remove bundled plugins and files that are not needed (smaller attack surface).
+# The official image copies /usr/src/wordpress into /var/www/html when the container
+# starts, so the files must be removed from /usr/src/wordpress, not /var/www/html.
+RUN rm -rf /usr/src/wordpress/wp-content/plugins/akismet \
+           /usr/src/wordpress/wp-content/plugins/hello.php \
+           /usr/src/wordpress/wp-content/plugins/hello-dolly \
+           /usr/src/wordpress/readme.html
+
 # Switch to non‑root user for security
 RUN useradd -m -u 1000 -s /bin/bash wpuser && \
     chown -R wpuser:wpuser /var/www/html
@@ -13,6 +21,8 @@ RUN apt-get update && apt-get remove -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Hardening: disable xmlrpc, block directory listing, hide version
+# The file is named zz-* so Apache loads it AFTER Debian's default security.conf
+# (configs load alphabetically); otherwise security.conf overrides ServerTokens/ServerSignature.
 RUN { \
         echo '<Files xmlrpc.php>'; \
         echo '    Require all denied'; \
@@ -21,8 +31,8 @@ RUN { \
         echo 'ServerSignature Off'; \
         echo 'ServerTokens Prod'; \
         echo 'Header unset X-Powered-By'; \
-    } > /etc/apache2/conf-available/security-hardening.conf && \
-    a2enconf security-hardening && \
+    } > /etc/apache2/conf-available/zz-security-hardening.conf && \
+    a2enconf zz-security-hardening && \
     a2enmod headers
 
 # Configure Apache to drop privileges to wpuser at runtime
