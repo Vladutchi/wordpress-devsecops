@@ -1,8 +1,8 @@
 {
-  "start_time": 1780586961,
-  "start_memory": 55459840,
+  "start_time": 1790877026,
+  "start_memory": 55717888,
   "command_line": "wpscan --url http://localhost:8080 --enumerate u,vp,vt --api-token [REDACTED] --format json --no-banner",
-  "hostname": "runnervm3jyl0",
+  "hostname": "runnervm8df0l",
   "target_url": "http://localhost:8080/",
   "target_ip": "::1",
   "effective_url": "http://localhost:8080/",
@@ -20,23 +20,7 @@
 
       },
       "interesting_entries": [
-        "Server: Apache/2.4.67 (Debian)"
-      ]
-    },
-    {
-      "url": "http://localhost:8080/readme.html",
-      "to_s": "WordPress readme found: http://localhost:8080/readme.html",
-      "type": "readme",
-      "found_by": "Direct Access (Aggressive Detection)",
-      "confidence": 100,
-      "confirmed_by": {
-
-      },
-      "references": {
-
-      },
-      "interesting_entries": [
-
+        "Server: Apache"
       ]
     },
     {
@@ -65,7 +49,7 @@
     "location": "http://localhost:8080/wp-content/themes/twentytwentyfive/",
     "latest_version": "1.5",
     "last_updated": "2026-05-20T00:00:00Z",
-    "last_updated_relative": "15 days ago",
+    "last_updated_relative": "4 months ago",
     "last_updated_source": "WordPress.org",
     "active_installs": 1000000,
     "outdated": false,
@@ -115,47 +99,7 @@
     ]
   },
   "plugins": {
-    "akismet": {
-      "slug": "akismet",
-      "location": "http://localhost:8080/wp-content/plugins/akismet/",
-      "latest_version": "5.7",
-      "last_updated": "2026-04-23T22:34:00Z",
-      "last_updated_relative": "1 month ago",
-      "last_updated_source": "WordPress.org",
-      "active_installs": 6000000,
-      "outdated": false,
-      "readme_url": false,
-      "directory_listing": false,
-      "error_log_url": null,
-      "found_by": "Known Locations (Aggressive Detection)",
-      "confidence": 80,
-      "interesting_entries": [
-        "http://localhost:8080/wp-content/plugins/akismet/, status: 403"
-      ],
-      "confirmed_by": {
 
-      },
-      "vulnerabilities": [
-        {
-          "title": "Akismet 2.5.0-3.1.4 - Unauthenticated Stored Cross-Site Scripting (XSS)",
-          "uuid": "1a2f3094-5970-4251-9ed0-ec595a0cd26c",
-          "fixed_in": "3.1.5",
-          "references": {
-            "cve": [
-              "2015-9357"
-            ],
-            "url": [
-              "http://blog.akismet.com/2015/10/13/akismet-3-1-5-wordpress/",
-              "https://blog.sucuri.net/2015/10/security-advisory-stored-xss-in-akismet-wordpress-plugin.html"
-            ],
-            "wpvulndb": [
-              "1a2f3094-5970-4251-9ed0-ec595a0cd26c"
-            ]
-          }
-        }
-      ],
-      "version": null
-    }
   },
   "themes": {
 
@@ -186,28 +130,28 @@
   },
   "vuln_api": {
     "plan": "free",
-    "requests_done_during_scan": 2,
-    "requests_remaining": 21
+    "requests_done_during_scan": 1,
+    "requests_remaining": 24
   },
-  "stop_time": 1780587365,
-  "elapsed": 404,
-  "requests_done": 17319,
-  "cached_requests": 19,
+  "stop_time": 1790877376,
+  "elapsed": 350,
+  "requests_done": 17318,
+  "cached_requests": 15,
   "response_status_codes": {
-    "200": 17143,
-    "301": 159,
+    "200": 17140,
+    "301": 165,
     "404": 9,
-    "403": 7,
+    "403": 3,
     "302": 1
   },
   "response_status_codes_warning": false,
   "response_status_codes_warnings": [
 
   ],
-  "data_sent": 4868770,
+  "data_sent": 4868372,
   "data_sent_humanised": "4.643 MB",
-  "data_received": 588209913,
-  "data_received_humanised": "560.961 MB",
-  "used_memory": 399249408,
-  "used_memory_humanised": "380.754 MB"
+  "data_received": 601339295,
+  "data_received_humanised": "573.482 MB",
+  "used_memory": 424341504,
+  "used_memory_humanised": "404.684 MB"
 }
