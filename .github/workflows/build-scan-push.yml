@@ -65,6 +65,22 @@ jobs:
             -p 8080:80 \
             wordpress-hardened:candidate
 
+      - name: Wait for WordPress files and wp-config.php
+        run: |
+          # On first start, the image copies WordPress into /var/www/html and generates
+          # wp-config.php from the environment variables. WP-CLI must wait for that.
+          for i in {1..30}; do
+            if docker exec wp-site test -f /var/www/html/wp-config.php; then
+              echo "wp-config.php is ready"
+              exit 0
+            fi
+            echo "Waiting for WordPress setup... ($i)"
+            sleep 2
+          done
+          echo "wp-config.php was not created in time"
+          docker logs wp-site
+          exit 1
+
       - name: Install WordPress using wp-cli
         run: |
           docker exec wp-site curl -s -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
